@@ -9,6 +9,7 @@ import json
 # 🟢 КОНСТАНТЫ
 # ----------------------------
 WIDTH, HEIGHT = 1200, 800
+lives = 3
 
 # 🟢 ИНИЦИАЛИЗАЦИЯ ЛОГА
 log = []
@@ -271,8 +272,8 @@ def draw_all():
     score_drawer.goto(0, -HEIGHT//2 + 40)
     score = steps - penalties
     score_drawer.clear()
-    score_drawer.write(f"Steps: {steps} | Penalties: {penalties} | Score: {score}",
-                       align="center", font=("Arial", 16, "bold"))
+    score_drawer.write(f"Lives: {lives} | Steps: {steps} | Penalties: {penalties}",
+                   align="center", font=("Arial", 16, "bold"))
     
     screen.update()
 
