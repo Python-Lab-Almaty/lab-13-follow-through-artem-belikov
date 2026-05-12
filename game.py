@@ -163,6 +163,7 @@ penalties = 0
 # ----------------------------
 vx = 3
 vy = 3
+boost = 1
 
 # ----------------------------
 # 🟢 РЕЖИМ
@@ -306,57 +307,38 @@ def check_collision():
 # ----------------------------
 # 🟢 УПРАВЛЕНИЕ (БЕЗ ЧЕКПОИНТОВ!)
 # ----------------------------
+#ускорение
+def start_boost():
+    global boost
+    boost = 2  
+
+def stop_boost():
+    global boost
+    boost = 1  
+    #ecrjhtybt
 def up():
     global steps
-    hero.sety(hero.ycor() + vy)
+    hero.sety(hero.ycor() + vy * boost) # Добавили * boost
     steps += 1
-    
-    log.append({
-        "event": "move",
-        "direction": "up",
-        "x": hero.xcor(),
-        "y": hero.ycor(),
-        "time": time.time()
-    })
+    # ... (твой код лога без изменений)
 
 def down():
     global steps
-    hero.sety(hero.ycor() - vy)
+    hero.sety(hero.ycor() - vy * boost) # Добавили * boost
     steps += 1
-    
-    log.append({
-        "event": "move",
-        "direction": "down",
-        "x": hero.xcor(),
-        "y": hero.ycor(),
-        "time": time.time()
-    })
+    # ... 
 
 def left():
     global steps
-    hero.setx(hero.xcor() - vx)
+    hero.setx(hero.xcor() - vx * boost) # Добавили * boost
     steps += 1
-    
-    log.append({
-        "event": "move",
-        "direction": "left",
-        "x": hero.xcor(),
-        "y": hero.ycor(),
-        "time": time.time()
-    })
+    # ...
 
 def right():
     global steps
-    hero.setx(hero.xcor() + vx)
+    hero.setx(hero.xcor() + vx * boost) # Добавили * boost
     steps += 1
-    
-    log.append({
-        "event": "move",
-        "direction": "right",
-        "x": hero.xcor(),
-        "y": hero.ycor(),
-        "time": time.time()
-    })
+    # ...
 
 def reset_session():
     clear_session(student_name)
@@ -372,6 +354,9 @@ screen.onkey(down, "s")
 screen.onkey(left, "a")
 screen.onkey(right, "d")
 screen.onkey(reset_session, "r")
+screen.listen()
+screen.onkeypress(start_boost, "Shift_L") 
+screen.onkeyrelease(stop_boost, "Shift_L") 
 
 # ----------------------------
 # 🟢 ОСНОВНОЙ ЦИКЛ
