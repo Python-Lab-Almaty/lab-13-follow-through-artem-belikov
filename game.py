@@ -316,29 +316,49 @@ def stop_boost():
     global boost
     boost = 1  
     #ecrjhtybt
+# Настройка скорости поворота
+rotation_speed = 10 
+
+def smooth_turn(target_angle):
+    """Плавно поворачивает героя к нужному углу"""
+    current_angle = hero.heading()
+    # Находим кратчайший путь поворота
+    diff = (target_angle - current_angle + 180) % 360 - 180
+    
+    if abs(diff) > 0:
+        step = rotation_speed if diff > 0 else -rotation_speed
+        if abs(diff) < rotation_speed:
+            hero.setheading(target_angle)
+        else:
+            hero.setheading(current_angle + step)
+
 def up():
     global steps
-    hero.sety(hero.ycor() + vy * boost) # Добавили * boost
+    smooth_turn(90) # Поворачиваем нос вверх
+    hero.forward(vy * boost)
     steps += 1
-    # ... (твой код лога без изменений)
+    log.append({"event": "move", "direction": "up", "x": hero.xcor(), "y": hero.ycor(), "time": time.time()})
 
 def down():
     global steps
-    hero.sety(hero.ycor() - vy * boost) # Добавили * boost
+    smooth_turn(270) # Поворачиваем нос вниз
+    hero.forward(vy * boost)
     steps += 1
-    # ... 
+    log.append({"event": "move", "direction": "down", "x": hero.xcor(), "y": hero.ycor(), "time": time.time()})
 
 def left():
     global steps
-    hero.setx(hero.xcor() - vx * boost) # Добавили * boost
+    smooth_turn(180) # Поворачиваем нос влево
+    hero.forward(vx * boost)
     steps += 1
-    # ...
+    log.append({"event": "move", "direction": "left", "x": hero.xcor(), "y": hero.ycor(), "time": time.time()})
 
 def right():
     global steps
-    hero.setx(hero.xcor() + vx * boost) # Добавили * boost
+    smooth_turn(0) # Поворачиваем нос вправо
+    hero.forward(vx * boost)
     steps += 1
-    # ...
+    log.append({"event": "move", "direction": "right", "x": hero.xcor(), "y": hero.ycor(), "time": time.time()})
 
 def reset_session():
     clear_session(student_name)
