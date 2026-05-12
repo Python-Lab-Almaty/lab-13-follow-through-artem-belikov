@@ -364,6 +364,9 @@ def reset_session():
     clear_session(student_name)
     print("🔄 Сессия сброшена. Перезапустите игру.")
 
+def play_goal_sound():
+    # Печатает символ, который в терминале Ubuntu вызывает звуковой сигнал
+    print('\a')
 screen.listen()
 screen.onkey(up, "Up")
 screen.onkey(down, "Down")
@@ -425,10 +428,14 @@ while True:
     # Проверка достижения цели
     if going_forward and abs(hero.xcor() - goal[0]) < 40 and abs(hero.ycor() - goal[1]) < 40:
         print("🎯 Reached B! RETURN TO A!")
+        # Проверка достижения цели
+        play_goal_sound()  
         print(f"🟢 Теперь будут появляться препятствия!")
         going_forward = False
         hero.color('yellow')
         #пожалуйста поставьте 100 :)
+  
+       
         
         log.append({
             "event": "reached_goal_B",
